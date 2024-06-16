@@ -16,7 +16,7 @@ class DependenciesSupervisor:
             "router": None,
             "session": None,
             "entity": None,
-            "error_handler": None,
+            "supervisor": None,
             "crud": None
         }	
 
@@ -26,14 +26,14 @@ class DependenciesSupervisor:
 
         for tuple in args:
             for value in tuple:
-                if not any([isinstance(value, Session), isinstance(value, utils.Entity), isinstance(value, utils.ErrorHandler), isinstance(value, db.CRUDController)]):
+                if not any([isinstance(value, Session), isinstance(value, utils.Entity), isinstance(value, utils.Supervisor), isinstance(value, db.CRUDController)]):
                     raise utils.exc.InvalidDependency("Invalid dependency type")                
                 if isinstance(value, APIRouter):
                     dependencies["router"] = value
                 if isinstance(value, utils.Entity):
                     dependencies["entity"] = value
-                if isinstance(value, utils.ErrorHandler):
-                    dependencies["error_handler"] = value
+                if isinstance(value, utils.Supervisor):
+                    dependencies["supervisor"] = value
                 if isinstance(value, db.CRUDController):
                     dependencies["crud"] = value
 
@@ -47,8 +47,8 @@ class DependenciesSupervisor:
                 # raise utils.exc.MissingDependency(f"Missing {key} dependency")
         if not hasattr(self, "entity"):
             raise utils.exc.MissingDependency("Missing entity dependency")
-        if not hasattr(self, "error_handler"):
-            self.error_handler = utils.ErrorHandler()
+        if not hasattr(self, "supervisor"):
+            self.supervisor = utils.Supervisor()
         if not hasattr(self, "crud"):
             raise utils.exc.MissingDependency("Missing crud dependency")
 

@@ -6,7 +6,7 @@ from functools import wraps
 from pydantic import BaseModel
 
 
-class ExceptionHandler:
+class Supervisor:
 
     def __init__(self, *args, **kwargs):
         self.args = args
@@ -36,7 +36,7 @@ class ExceptionHandler:
                             content = list(map(lambda x: x.dict(), result))
                         
                     else:
-                        content = {"message": success_message}
+                        content = success_message
 
                     return JSONResponse(
                         status_code=200 if not success_status_code else success_status_code,

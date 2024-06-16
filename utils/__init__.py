@@ -1,6 +1,6 @@
 try:
     from utils import exceptions as exc
-    from utils.error_handler import ExceptionHandler as ErrorHandler
+    from utils.supervisor import Supervisor
     from utils.dependencies import DependenciesSupervisor as Dependencies
     from utils.entity import Entity
     from utils import auth

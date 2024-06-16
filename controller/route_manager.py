@@ -36,7 +36,7 @@ class RouteManager(utils.Dependencies):
             # user: utils.auth.User = Depends(utils.auth.is_authenticated)
             ):
 
-            @self.error_handler.supervise(
+            @self.supervisor.supervise(
                 success_message="Object created successfully",
                 error_message="Error creating object",
                 return_method_response=True
@@ -61,7 +61,7 @@ class RouteManager(utils.Dependencies):
         @utils.decorators.logs(denomination=self.route_name)
         @utils.decorators.time_control
         async def read_all():
-            @self.error_handler.supervise(
+            @self.supervisor.supervise(
                 success_message="Objects read successfully",
                 error_message="Error reading objects",
                 return_method_response=True
@@ -86,7 +86,7 @@ class RouteManager(utils.Dependencies):
         @utils.decorators.logs(denomination=self.route_name)
         @utils.decorators.time_control
         async def read_one(id: UUID4):
-            @self.error_handler.supervise(
+            @self.supervisor.supervise(
                 success_message="Object read successfully",
                 error_message="Error reading object",
                 return_method_response=True
@@ -114,7 +114,7 @@ class RouteManager(utils.Dependencies):
             update: self.entity.update
             ):
 
-            @self.error_handler.supervise(
+            @self.supervisor.supervise(
                 success_message="Object updated successfully",
                 error_message="Error updating object",
                 return_method_response=True
@@ -137,7 +137,7 @@ class RouteManager(utils.Dependencies):
         @utils.decorators.logs(denomination=self.route_name)
         @utils.decorators.time_control
         async def delete(id: UUID4):
-            @self.error_handler.supervise(
+            @self.supervisor.supervise(
                 success_message="Object deleted successfully",
                 error_message="Error deleting object",
                 return_method_response=True
