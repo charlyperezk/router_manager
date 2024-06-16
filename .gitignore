@@ -1,0 +1,3 @@
+*.db
+routermanagerenv
+__pycache__

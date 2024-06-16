@@ -1,0 +1,1 @@
+from db.crud import GenericCRUD as CRUDController
