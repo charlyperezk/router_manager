@@ -2,7 +2,7 @@ import utils, db
 import controller.route_manager as control
 
 
-__name__ = "payment_methods"
+__name__ = "movement_type"
 
 try:
     from implementations.database import Base, engine, get_session

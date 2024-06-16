@@ -1,6 +1,6 @@
+import utils, db
 from sqlalchemy.orm import Session
 from fastapi import APIRouter
-import utils, db
 
 
 class DependenciesSupervisor:
