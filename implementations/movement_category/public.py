@@ -1,3 +1,4 @@
+
 import schemas, utils, uuid
 from sqlalchemy import Column, String, Boolean, UUID
 from pydantic.types import UUID4
@@ -5,7 +6,7 @@ from pydantic.types import UUID4
 from implementations.database import Base
 
 
-class PaymentMethodCreate(schemas.bom.Create):
+class MovementCategoryCreate(schemas.bom.Create):
     name: str
     description: str
 
@@ -15,7 +16,7 @@ class PaymentMethodCreate(schemas.bom.Create):
             "description": self.description
         }
 
-class PaymentMethodRead(schemas.bom.Read):
+class MovementCategoryRead(schemas.bom.Read):
     id: UUID4
     name: str
     description: str
@@ -27,13 +28,13 @@ class PaymentMethodRead(schemas.bom.Read):
             "description": self.description
         }
 
-class PaymentMethodUpdate(schemas.bom.Update):
+class MovementCategoryUpdate(schemas.bom.Update):
     name: str
     description: str
     is_active: bool
 
-class PaymentMethod(Base):
-    __tablename__ = "payment_methods"
+class MovementCategory(Base):
+    __tablename__ = "movement_category"
     id = Column(UUID, primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     name = Column(String)
     description = Column(String)
@@ -49,8 +50,8 @@ class PaymentMethod(Base):
         }
     
 entity = utils.Entity(
-    create=PaymentMethodCreate,
-    read=PaymentMethodRead,
-    update=PaymentMethodUpdate,
-    db_model=PaymentMethod
+    create=MovementCategoryCreate,
+    read=MovementCategoryRead,
+    update=MovementCategoryUpdate,
+    db_model=MovementCategory
 )

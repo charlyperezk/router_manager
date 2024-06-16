@@ -37,6 +37,7 @@ class MovementType(Base):
     id = Column(UUID, primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     name = Column(String)
     description = Column(String)
+    is_default = Column(Boolean, default=False)
     is_active = Column(Boolean, default=True)
 
     def dict(self):
