@@ -8,10 +8,13 @@ class GenericCRUD:
         self.model = model
 
     def get(self, id: int):
-        obj = self.session.query(self.model).get(id)
-        if obj is None:
-            raise utils.exc.NotFoundError(detail=f"{self.model.__object_name__} not found")
-        return obj
+        try:
+            obj = self.session.query(self.model).get(id)
+            if not obj:
+                raise utils.exc.NotFoundError(detail=f"{self.model.__object_name__} not found")
+            return obj
+        except Exception as e:
+            raise utils.exc.NotFoundError(detail=str(e))
     
     def get_all(self):
         try:
@@ -25,29 +28,27 @@ class GenericCRUD:
     def create(self, obj):
         try:
             self.session.add(obj)
-            # self.session.commit()
         except Exception as e:
-            # self.session.rollback()
             raise utils.exc.CreationError(detail=str(e))
         return obj
     
     def update(self, index, updated_object_data: schemas.bom.Update):
-        if isinstance(updated_object_data, schemas.bom.Update):      
-            db_register = self.session.query(self.model).filter(self.model.id == index).first()
-            for key, value in updated_object_data.dict().items():
-                setattr(db_register, key, value)
-            self.session.commit()
-            return db_register
-        
-        else:
-            raise utils.exc.InvalidInputError(detail="The updated object data is not a valid object")
-        
+        try:
+            if isinstance(updated_object_data, schemas.bom.Update):      
+                db_register = self.session.query(self.model).filter(self.model.id == index).first()
+                for key, value in updated_object_data.dict().items():
+                    setattr(db_register, key, value)
+                return db_register
+            
+            else:
+                raise utils.exc.InvalidInputError(detail="The updated object data is not a valid object")
+        except Exception as e:
+            raise utils.exc.UpdateError(detail=str(e))
+
     def delete(self, id):
         try:
             obj = self.session.query(self.model).get(id)
             self.session.delete(obj)
-            self.session.commit()
         except Exception as e:
-            self.session.rollback()
             raise utils.exc.DeletionError(detail=str(e))
         return obj

@@ -38,6 +38,7 @@ class Supervisor:
                     else:
                         content = success_message
 
+                    self.session.commit()
                     return JSONResponse(
                         status_code=200 if not success_status_code else success_status_code,
                         content={"message": content}
