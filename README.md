@@ -1,4 +1,4 @@
-# FastAPI Dynamic CRUD Creator
+# Router Manager -- FastAPI Dynamic CRUD Creator
 
 This project implements a dynamic CRUD endpoint creator for web applications using FastAPI. It allows easily creating CRUD (Create, Read, Update, Delete) operations for different data entities efficiently and scalably.
 
@@ -46,10 +46,10 @@ To add new CRUD entities:
 ### Example in `examples/team/public.py`
 1. Define the schemas and database model.
 2. Instantiate Entity with the objects created in step 1.
-### Ejemplo en `examples/team/__init__.py`
+### Example in `examples/team/__init__.py`
 3. Now you can create your GenericCrud instance for database operations.
 4. Create your RouteManager object.
-### Ejemplo en `main.py`
+### Example in `main.py`
 5. Add your CRUD router to your FastAPI object, using the crud_route property of your RouteManager object.
 
 ## Contribución
