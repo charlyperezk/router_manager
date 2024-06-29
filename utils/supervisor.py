@@ -12,16 +12,13 @@ class Supervisor:
         self.args = args
         self.kwargs = kwargs
 
-        for arg in args:
-            if isinstance(arg, Session):
-                self.session = arg
-
     def supervise(self,
                   success_message: Optional[str] = None,
                   success_status_code: Optional[int] = None,
                   error_message: Optional[str] = None,
                   error_status_code: Optional[int] = None,
-                  return_method_response: Optional[bool] = False
+                  return_method_response: Optional[bool] = False,
+                  session: Session = None
                   ):
         def decorator(func):
             @wraps(func)
@@ -40,15 +37,17 @@ class Supervisor:
                     else:
                         content = success_message
 
-                    self.session.commit()
+                    if session:
+                        session.commit()
+
                     return JSONResponse(
                         status_code=200 if not success_status_code else success_status_code,
                         content={"message": content}
                     )
 
                 except Exception as e:
-                    if self.session:
-                        self.session.rollback()
+                    if session:
+                        session.rollback()
                     if error_message:
                         print(error_message)
                         print(e)

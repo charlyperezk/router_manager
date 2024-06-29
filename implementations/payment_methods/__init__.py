@@ -8,20 +8,13 @@ try:
     from implementations.database import Base, engine, get_session
     from implementations.movement_type.public import entity
 
-    crud_client = db.CRUDController(session=get_session(), model=entity.db_model)
-    supervisor = utils.Supervisor(get_session())
+    session = get_session()
+    crud_client = db.CRUDController(model=entity.db_model)
 except Exception as e:
     raise utils.exc.InitializationError(f"Error initializing {__name__}. Details: {e}")
-
-def create_db():
-    try:
-        Base.metadata.create_all(engine, checkfirst=True)
-    except Exception as e:
-        raise utils.exc.InitializationError(f"Error creating {__name__} database. Details: {e}")
-
 
 route_manager = control.RouteManager(__name__,
                             entity,
                             crud_client,
-                            supervisor,
+                            session,
                             )

@@ -34,6 +34,8 @@ class DependenciesSupervisor:
                     dependencies["entity"] = value
                 if isinstance(value, utils.Supervisor):
                     dependencies["supervisor"] = value
+                if isinstance(value, Session):
+                    dependencies["session"] = value
                 if isinstance(value, db.CRUDController):
                     dependencies["crud"] = value
 
@@ -49,6 +51,8 @@ class DependenciesSupervisor:
             raise utils.exc.MissingDependency("Missing entity dependency")
         if not hasattr(self, "supervisor"):
             self.supervisor = utils.Supervisor()
+        if not hasattr(self, "session"):
+            raise utils.exc.MissingDependency("Missing session dependency")
         if not hasattr(self, "crud"):
             raise utils.exc.MissingDependency("Missing crud dependency")
 

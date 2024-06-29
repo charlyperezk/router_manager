@@ -1,4 +1,3 @@
-
 import schemas, utils, uuid
 from sqlalchemy import Column, String, Boolean, UUID
 from pydantic.types import UUID4

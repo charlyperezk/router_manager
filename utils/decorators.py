@@ -1,6 +1,7 @@
 import time
 from functools import wraps
 
+
 def time_control(func):
     @wraps(func)
     async def wrapper(*args, **kwargs):

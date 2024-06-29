@@ -5,7 +5,11 @@ from fastapi import Depends, APIRouter
 from fastapi.concurrency import run_in_threadpool
 
 
-class RouteManager(utils.Dependencies):
+class RouteManager(utils.Dependencies, utils.Supervisor):
+
+    """
+        This class is responsible for creating CRUD routes for a given entity.
+    """
 
     def __init__(self, route_name: str, *args, **kwargs):
         if not isinstance(route_name, str):
@@ -39,12 +43,13 @@ class RouteManager(utils.Dependencies):
             @self.supervisor.supervise(
                 success_message="Object created successfully",
                 error_message="Error creating object",
-                return_method_response=True
+                return_method_response=True,
+                session=self.session
             )
             async def inner_create():
                 try:
                     db_object = self.entity.get_db_model_instance(new)
-                    crud_return = await run_in_threadpool(self.crud.create, db_object)
+                    crud_return = await run_in_threadpool(self.crud.create, db_object, self.session)
                     return self.entity.get_creational_response(crud_return)
                 except Exception as e:
                     raise utils.exc.InvalidInputError(detail=str(e))
@@ -68,7 +73,7 @@ class RouteManager(utils.Dependencies):
                 )
             async def inner_read_all():
                 try:
-                    results = await run_in_threadpool(self.crud.get_all)
+                    results = await run_in_threadpool(self.crud.get_all, self.session)
                     return list(map(lambda result: self.entity.get_read_response(result), results))
 
                 except Exception as e:
@@ -93,7 +98,7 @@ class RouteManager(utils.Dependencies):
                 )
             async def inner_read():
                 try:
-                    db_object = await run_in_threadpool(self.crud.get, id)
+                    db_object = await run_in_threadpool(self.crud.get, id, self.session)
                     if db_object:
                         return self.entity.get_read_response(db_object)
                     else:
@@ -120,11 +125,12 @@ class RouteManager(utils.Dependencies):
             @self.supervisor.supervise(
                 success_message="Object updated successfully",
                 error_message="Error updating object",
-                return_method_response=True
+                return_method_response=True,
+                session=self.session
                 )
             async def inner_update():
                 try:
-                    db_object = await run_in_threadpool(self.crud.update, id, update)
+                    db_object = await run_in_threadpool(self.crud.update, id, update, self.session)
                     return self.entity.get_read_response(db_object)
                 
                 except Exception as e:
@@ -143,11 +149,12 @@ class RouteManager(utils.Dependencies):
             @self.supervisor.supervise(
                 success_message="Object deleted successfully",
                 error_message="Error deleting object",
-                return_method_response=True
+                return_method_response=True,
+                session=self.session
                 )
             async def inner_delete():
                 try:
-                    db_object = await run_in_threadpool(self.crud.delete, id)
+                    db_object = await run_in_threadpool(self.crud.delete, id, self.session)
                     return self.entity.get_read_response(db_object)
                 except Exception as e:
                     raise utils.exc.NotFoundError(detail=str(e))
