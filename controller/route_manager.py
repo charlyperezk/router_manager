@@ -94,7 +94,10 @@ class RouteManager(utils.Dependencies):
             async def inner_read():
                 try:
                     db_object = await run_in_threadpool(self.crud.get, id)
-                    return self.entity.get_read_response(db_object)
+                    if db_object:
+                        return self.entity.get_read_response(db_object)
+                    else:
+                        return "Object not found"
                 except Exception as e:
                     raise utils.exc.NotFoundError(detail=str(e))
             

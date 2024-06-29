@@ -16,6 +16,10 @@ class CreationError(HTTPException):
     def __init__(self, detail: str):
         super().__init__(status_code=400, detail=detail)
 
+class ReadError(HTTPException):
+    def __init__(self, detail: str):
+        super().__init__(status_code=400, detail=detail)
+
 class UpdateError(HTTPException):
     def __init__(self, detail: str):
         super().__init__(status_code=400, detail=detail)

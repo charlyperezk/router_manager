@@ -34,6 +34,8 @@ class Supervisor:
                             content = result.dict()
                         if isinstance(result, list):
                             content = list(map(lambda x: x.dict(), result))
+                        if isinstance(result, str):
+                            content = result
                         
                     else:
                         content = success_message

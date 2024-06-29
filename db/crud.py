@@ -11,23 +11,26 @@ class GenericCRUD:
         try:
             obj = self.session.query(self.model).get(id)
             if not obj:
-                raise utils.exc.NotFoundError(detail=f"{self.model.__object_name__} not found")
+                return None
+                # raise utils.exc.NotFoundError(detail=f"{self.model.__name__} not found")
             return obj
         except Exception as e:
-            raise utils.exc.NotFoundError(detail=str(e))
+            raise utils.exc.ReadError(detail=str(e))
     
     def get_all(self):
         try:
             objects = self.session.query(self.model).all()
             if not objects:
-                raise utils.exc.NotFoundError(detail=f"No {self.model.__object_name__} found")
+                return []
+                # raise utils.exc.NotFoundError(detail=f"No {self.model.__name__} found")
             return objects
         except Exception as e:
-            raise utils.exc.NotFoundError(detail=str(e))
+            raise utils.exc.ReadError(detail=str(e))
         
     def create(self, obj):
         try:
             self.session.add(obj)
+            # self.session.commit()
         except Exception as e:
             raise utils.exc.CreationError(detail=str(e))
         return obj
