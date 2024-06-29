@@ -33,8 +33,8 @@ class RouteManager(utils.Dependencies, utils.Supervisor):
                 response_description="New object created successfully"
                 )
 
-        @utils.decorators.logs(denomination=self.route_name)
-        @utils.decorators.time_control        
+        @utils.dec.logs(denomination=self.route_name)
+        @utils.dec.time_control        
         async def create(
             new: self.entity.create,
             # user: utils.auth.User = Depends(utils.auth.is_authenticated)
@@ -63,8 +63,8 @@ class RouteManager(utils.Dependencies, utils.Supervisor):
                 response_description="List of objects"
                 )
         
-        @utils.decorators.logs(denomination=self.route_name)
-        @utils.decorators.time_control
+        @utils.dec.logs(denomination=self.route_name)
+        @utils.dec.time_control
         async def read_all():
             @self.supervisor.supervise(
                 success_message="Objects read successfully",
@@ -88,8 +88,8 @@ class RouteManager(utils.Dependencies, utils.Supervisor):
             response_description="Object found successfully"
             )
         
-        @utils.decorators.logs(denomination=self.route_name)
-        @utils.decorators.time_control
+        @utils.dec.logs(denomination=self.route_name)
+        @utils.dec.time_control
         async def read_one(id: UUID4):
             @self.supervisor.supervise(
                 success_message="Object read successfully",
@@ -115,8 +115,8 @@ class RouteManager(utils.Dependencies, utils.Supervisor):
             response_description="Object updated successfully"
             )
         
-        @utils.decorators.logs(denomination=self.route_name)
-        @utils.decorators.time_control
+        @utils.dec.logs(denomination=self.route_name)
+        @utils.dec.time_control
         async def update(
             id: UUID4,
             update: self.entity.update
@@ -143,8 +143,8 @@ class RouteManager(utils.Dependencies, utils.Supervisor):
             description="Delete an object",
             response_description="Object deleted successfully"
             )
-        @utils.decorators.logs(denomination=self.route_name)
-        @utils.decorators.time_control
+        @utils.dec.logs(denomination=self.route_name)
+        @utils.dec.time_control
         async def delete(id: UUID4):
             @self.supervisor.supervise(
                 success_message="Object deleted successfully",

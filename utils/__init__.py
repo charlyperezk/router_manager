@@ -4,6 +4,6 @@ try:
     from utils.dependencies import DependenciesSupervisor as Dependencies
     from utils.entity import Entity
     from utils import auth
-    from utils import decorators
+    from utils import decorators as dec
 except ImportError as e:
     print(f"Error importing utils. Details: {e}")
