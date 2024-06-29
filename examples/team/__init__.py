@@ -2,11 +2,11 @@ import utils, db
 import controller.route_manager as control
 
 
-__name__ = "payment_methods"
+__name__ = "team"
 
 try:
-    from implementations.database import Base, engine, get_session
-    from implementations.movement_type.public import entity
+    from examples.database import get_session
+    from examples.team.public import entity
 
     session = get_session()
     crud_client = db.CRUDController(model=entity.db_model)
@@ -16,5 +16,5 @@ except Exception as e:
 route_manager = control.RouteManager(__name__,
                             entity,
                             crud_client,
-                            session,
+                            session
                             )

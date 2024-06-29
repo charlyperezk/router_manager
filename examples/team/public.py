@@ -2,10 +2,10 @@ import schemas, utils, uuid
 from sqlalchemy import Column, String, Boolean, UUID
 from pydantic.types import UUID4
 
-from implementations.database import Base
+from examples.database import Base
 
 
-class PaymentMethodCreate(schemas.bom.Create):
+class TeamCreate(schemas.bom.Create):
     name: str
     description: str
 
@@ -15,7 +15,7 @@ class PaymentMethodCreate(schemas.bom.Create):
             "description": self.description
         }
 
-class PaymentMethodRead(schemas.bom.Read):
+class TeamRead(schemas.bom.Read):
     id: UUID4
     name: str
     description: str
@@ -27,17 +27,17 @@ class PaymentMethodRead(schemas.bom.Read):
             "description": self.description
         }
 
-class PaymentMethodUpdate(schemas.bom.Update):
+class TeamUpdate(schemas.bom.Update):
     name: str
     description: str
     is_active: bool
 
-class PaymentMethod(Base):
-    __tablename__ = "payment_methods"
+class Team(Base):
+    __tablename__ = "team"
     id = Column(UUID, primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     name = Column(String)
     description = Column(String)
-    is_default = Column(Boolean, default=False)
+    # is_default = Column(Boolean, default=False)
     is_active = Column(Boolean, default=True)
 
     def dict(self):
@@ -49,8 +49,8 @@ class PaymentMethod(Base):
         }
     
 entity = utils.Entity(
-    create=PaymentMethodCreate,
-    read=PaymentMethodRead,
-    update=PaymentMethodUpdate,
-    db_model=PaymentMethod
+    create=TeamCreate,
+    read=TeamRead,
+    update=TeamUpdate,
+    db_model=Team
 )
