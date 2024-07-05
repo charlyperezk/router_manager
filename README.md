@@ -10,6 +10,12 @@ This project implements a dynamic CRUD endpoint creator for web applications usi
 - **Secure Transactions:** Manages database transactions securely with SQLAlchemy.
 - **Monitoring and Control:** Uses asynchronous functions and supervision to optimize CRUD operation performance.
 
+## Example:
+
+<img width="893" alt="Captura de pantalla 2024-06-29 170600" src="https://github.com/charlyperezk/router_manager/assets/118618975/d54480dd-fe50-4e89-b786-5d5bb01493c3">
+
+### Team Crud Route Created
+
 ## Requirements
 
 - Python 3.7 or higher
