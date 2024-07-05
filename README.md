@@ -20,8 +20,8 @@ This project implements a dynamic CRUD endpoint creator for web applications usi
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/your_username/your_project.git
-   cd your_project
+   git clone https://github.com/charlyperezk/router_manager
+   cd router_manager
 
 2. Install dependencies:
 
@@ -52,10 +52,10 @@ To add new CRUD entities:
 ### Example in `main.py`
 5. Add your CRUD router to your FastAPI object, using the crud_route property of your RouteManager object.
 
-## Contribución
+## Contribution
 
 Contributions are welcome! If you want to improve this project, please send a pull request. If you encounter any issues, please create an issue.
 
-## Licencia
+## License
 
 This project is licensed under the MIT License.
